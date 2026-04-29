@@ -1,0 +1,4 @@
+import type { JuryTemplate } from "@/types/jury";
+const base=[
+"ايه الفكرة الأساسية في جملة؟","ليه اخترت الخامة دي؟","إزاي اللون خدم الإحساس؟","فين نقطة التركيز؟","إيه اللي اتغير من الاسكتش للنهائي؟","المشروع لمين؟","فين السياق المحلي؟","أكبر نقطة ضعف؟","لو معاك يومين زيادة؟","ليه التكوين ده؟","فين بصمتك عن المراجع؟","العلاقة بين الشكل والمضمون؟","ليه المقياس ده؟","تعاملت إزاي مع الوقت؟","إيه دليل إن الفكرة وصلت؟","أهم قرار تصميم؟","ردك على نقد المباشرة؟","تجنبت الكليشيه إزاي؟","منطق ترتيب العرض؟","ليه مشروعك يستحق التقدير؟"];
+export const juryTemplates: JuryTemplate[]=base.map((q,i)=>({id:`JAR${String(i+1).padStart(2,"0")}`,question:q,suggestedAnswerTemplate:"الفكرة عندي {coreIdea} وطبقتها عبر {visualDecision}.",answerStyleTip:"رد مختصر + مثال واحد.",strengthHints:["وضوح","احترام"],weaknessWarnings:["إطالة","تعميم"],avoidSaying:["مش عارف","عشوائي"],departments:["general"],projectFormats:["presentation"],moods:["memory"],triggerKeywords:["idea","process"]}));

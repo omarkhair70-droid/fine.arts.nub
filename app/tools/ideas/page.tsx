@@ -1,234 +1,39 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
+import CopyButton from "@/components/CopyButton";
+import ResultCard from "@/components/ResultCard";
+import ToolPageShell from "@/components/ToolPageShell";
+import ToolSection from "@/components/ToolSection";
 import { generateIdeas } from "@/lib/generators/generateIdeas";
+import { budgetLevelLabels, budgetLevels, departmentLabels, departments, experienceLevelLabels, experienceLevels, moodLabels, moods, projectFormatLabels, projectFormats } from "@/lib/ui-labels";
 import type { IdeaInput } from "@/types/ideas";
-import type {
-  BudgetLevel,
-  Department,
-  ExperienceLevel,
-  Mood,
-  ProjectFormat
-} from "@/types/taxonomy";
-
-const departmentOptions: { value: Department; label: string }[] = [
-  { value: "graphic", label: "جرافيك" },
-  { value: "decor", label: "ديكور" },
-  { value: "painting", label: "تصوير زيتي" },
-  { value: "drawing", label: "رسم" },
-  { value: "sculpture", label: "نحت" },
-  { value: "ceramics", label: "خزف" },
-  { value: "photography", label: "تصوير فوتوغرافي" },
-  { value: "general", label: "عام" }
-];
-
-const projectFormatOptions: { value: ProjectFormat; label: string }[] = [
-  { value: "painting", label: "لوحة" },
-  { value: "poster", label: "بوستر" },
-  { value: "campaign", label: "حملة" },
-  { value: "space", label: "فراغ / مساحة" },
-  { value: "model", label: "ماكيت" },
-  { value: "sculpture", label: "مجسّم" },
-  { value: "installation", label: "تركيب" },
-  { value: "photography", label: "تصوير" },
-  { value: "presentation", label: "عرض تقديمي" }
-];
-
-const moodOptions: { value: Mood; label: string }[] = [
-  { value: "sadness", label: "حزن" },
-  { value: "nostalgia", label: "نوستالجيا" },
-  { value: "tension", label: "توتر" },
-  { value: "chaos", label: "فوضى" },
-  { value: "hope", label: "أمل" },
-  { value: "identity", label: "هوية" },
-  { value: "city", label: "المدينة" },
-  { value: "childhood", label: "الطفولة" },
-  { value: "isolation", label: "عزلة" },
-  { value: "memory", label: "ذاكرة" }
-];
-
-const budgetOptions: { value: BudgetLevel; label: string }[] = [
-  { value: "very-low", label: "منخفض جدًا" },
-  { value: "low", label: "منخفض" },
-  { value: "medium", label: "متوسط" },
-  { value: "open", label: "مفتوح" }
-];
-
-const experienceOptions: { value: ExperienceLevel; label: string }[] = [
-  { value: "beginner", label: "مبتدئ" },
-  { value: "intermediate", label: "متوسط" },
-  { value: "advanced", label: "متقدم" }
-];
+import type { BudgetLevel, Department, ExperienceLevel, Mood, ProjectFormat } from "@/types/taxonomy";
 
 export default function IdeasPage() {
-  const [input, setInput] = useState<IdeaInput>({
-    department: "graphic",
-    projectFormat: "poster",
-    mood: "identity",
-    budgetLevel: "low",
-    experienceLevel: "beginner"
-  });
-
-  const output = useMemo(() => generateIdeas(input), [input]);
+  const [form, setForm] = useState<IdeaInput>({ department: "graphic", projectFormat: "poster", mood: "identity", budgetLevel: "low", experienceLevel: "beginner" });
+  const output = useMemo(() => generateIdeas(form), [form]);
 
   return (
-    <main className="min-h-screen bg-stone-50 px-4 py-8 text-stone-900" dir="rtl">
-      <div className="mx-auto max-w-3xl space-y-6">
-        <header className="space-y-2">
-          <h1 className="text-3xl font-bold">عايز فكرة مشروع؟</h1>
-          <p className="text-sm leading-6 text-stone-700">
-            اختار القسم، نوع التسليم، والإحساس اللي عايز توصله — وStudio Rescue يطلعلك 3
-            أفكار قابلة للتنفيذ والدفاع قدام اللجنة.
-          </p>
-        </header>
-
-        <section className="rounded-xl border border-stone-200 bg-white p-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <label className="space-y-1 text-sm">
-              <span className="font-medium">القسم</span>
-              <select
-                className="w-full rounded-md border border-stone-300 bg-white px-3 py-2"
-                value={input.department}
-                onChange={(event) =>
-                  setInput((prev) => ({ ...prev, department: event.target.value as Department }))
-                }
-              >
-                {departmentOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="space-y-1 text-sm">
-              <span className="font-medium">نوع التسليم</span>
-              <select
-                className="w-full rounded-md border border-stone-300 bg-white px-3 py-2"
-                value={input.projectFormat}
-                onChange={(event) =>
-                  setInput((prev) => ({
-                    ...prev,
-                    projectFormat: event.target.value as ProjectFormat
-                  }))
-                }
-              >
-                {projectFormatOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="space-y-1 text-sm">
-              <span className="font-medium">الإحساس / المزاج</span>
-              <select
-                className="w-full rounded-md border border-stone-300 bg-white px-3 py-2"
-                value={input.mood}
-                onChange={(event) =>
-                  setInput((prev) => ({ ...prev, mood: event.target.value as Mood }))
-                }
-              >
-                {moodOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="space-y-1 text-sm">
-              <span className="font-medium">الميزانية</span>
-              <select
-                className="w-full rounded-md border border-stone-300 bg-white px-3 py-2"
-                value={input.budgetLevel}
-                onChange={(event) =>
-                  setInput((prev) => ({ ...prev, budgetLevel: event.target.value as BudgetLevel }))
-                }
-              >
-                {budgetOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="space-y-1 text-sm sm:col-span-2">
-              <span className="font-medium">مستوى الخبرة</span>
-              <select
-                className="w-full rounded-md border border-stone-300 bg-white px-3 py-2"
-                value={input.experienceLevel}
-                onChange={(event) =>
-                  setInput((prev) => ({
-                    ...prev,
-                    experienceLevel: event.target.value as ExperienceLevel
-                  }))
-                }
-              >
-                {experienceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-xl font-semibold">الملخص</h2>
-          <div className="rounded-xl border border-stone-200 bg-white p-4 text-sm leading-6">
-            {output.summary}
-          </div>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-xl font-semibold">الأفكار المقترحة</h2>
-          <div className="space-y-3">
-            {output.ideas.map((idea) => (
-              <article key={idea.id} className="rounded-xl border border-stone-200 bg-white p-4">
-                <h3 className="text-lg font-bold">{idea.title}</h3>
-                <dl className="mt-3 space-y-2 text-sm leading-6">
-                  <div>
-                    <dt className="font-semibold">العنوان</dt>
-                    <dd>{idea.title}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">الكونسبت</dt>
-                    <dd>{idea.concept}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">الخامات</dt>
-                    <dd>{idea.materials.join("، ")}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">طريقة التنفيذ</dt>
-                    <dd>{idea.executionMethod.join("، ")}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">ليه الفكرة قوية؟</dt>
-                    <dd>{idea.whyStrong}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">جملة شرح قصيرة</dt>
-                    <dd>{idea.shortExplanation}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">جملة دفاع قدام اللجنة</dt>
-                    <dd>{idea.juryDefenseLine}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold">نسبة الملاءمة</dt>
-                    <dd>{idea.fitScore}%</dd>
-                  </div>
-                </dl>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
-    </main>
+    <ToolPageShell title="عايز فكرة مشروع؟" subtitle="اختار القسم، نوع التسليم، والإحساس اللي عايز توصله — وStudio Rescue يطلعلك 3 أفكار قابلة للتنفيذ والدفاع قدام اللجنة.">
+      <ToolSection title="اختياراتك">
+        <form className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Field label="القسم"><select value={form.department} onChange={(e) => setForm((p) => ({ ...p, department: e.target.value as Department }))} className="input">{departments.map((o) => <option key={o} value={o}>{departmentLabels[o]}</option>)}</select></Field>
+          <Field label="نوع التسليم"><select value={form.projectFormat} onChange={(e) => setForm((p) => ({ ...p, projectFormat: e.target.value as ProjectFormat }))} className="input">{projectFormats.map((o) => <option key={o} value={o}>{projectFormatLabels[o]}</option>)}</select></Field>
+          <Field label="الإحساس / المزاج"><select value={form.mood} onChange={(e) => setForm((p) => ({ ...p, mood: e.target.value as Mood }))} className="input">{moods.map((o) => <option key={o} value={o}>{moodLabels[o]}</option>)}</select></Field>
+          <Field label="الميزانية"><select value={form.budgetLevel} onChange={(e) => setForm((p) => ({ ...p, budgetLevel: e.target.value as BudgetLevel }))} className="input">{budgetLevels.map((o) => <option key={o} value={o}>{budgetLevelLabels[o]}</option>)}</select></Field>
+          <Field label="مستواك"><select value={form.experienceLevel} onChange={(e) => setForm((p) => ({ ...p, experienceLevel: e.target.value as ExperienceLevel }))} className="input">{experienceLevels.map((o) => <option key={o} value={o}>{experienceLevelLabels[o]}</option>)}</select></Field>
+        </form>
+      </ToolSection>
+      <ToolSection title="الملخص"><p>{output.summary}</p></ToolSection>
+      <ToolSection title="الأفكار المقترحة">
+        <div className="space-y-3">{output.ideas.map((idea) => <ResultCard key={idea.id}><p className="text-lg font-extrabold">{idea.title}</p><p className="mt-2"><span className="font-bold">الكونسبت: </span>{idea.concept}</p><p><span className="font-bold">الخامات: </span>{idea.materials.join("، ")}</p><div><p className="font-bold">طريقة التنفيذ</p><ul className="list-disc ps-5">{idea.executionMethod.map((item) => <li key={item}>{item}</li>)}</ul></div><p><span className="font-bold">ليه الفكرة قوية؟ </span>{idea.whyStrong}</p><p><span className="font-bold">جملة شرح قصيرة: </span>{idea.shortExplanation}</p><CopyButton text={idea.shortExplanation} /><p className="mt-2"><span className="font-bold">جملة دفاع قدام اللجنة: </span>{idea.juryDefenseLine}</p><CopyButton text={idea.juryDefenseLine} /><p className="mt-2 text-sm font-bold text-rose-700">نسبة الملاءمة: {idea.fitScore}%</p></ResultCard>)}</div>
+      </ToolSection>
+    </ToolPageShell>
   );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return <label className="space-y-1"><span className="text-sm font-semibold">{label}</span>{children}</label>;
 }

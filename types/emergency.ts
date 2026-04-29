@@ -1,3 +1,20 @@
+import type {
+  BudgetLevel,
+  Department,
+  ExperienceLevel,
+  Mood,
+  ProjectFormat
+} from "@/types/taxonomy";
+
+export interface EmergencyInput {
+  department: Department;
+  projectFormat: ProjectFormat;
+  daysLeft: number;
+  budgetLevel: BudgetLevel;
+  experienceLevel: ExperienceLevel;
+  mood?: Mood;
+}
+
 export interface EmergencyPlan {
   summary: string;
   priority: "low" | "medium" | "high";

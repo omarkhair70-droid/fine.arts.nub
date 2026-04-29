@@ -1,6 +1,22 @@
 export const fallbackOutputs = {
-  emergency: { priority: "medium", actions: ["Pause", "Review constraints", "Pick one action"] },
-  ideas: [{ seed: "Constraint", variation: "Use a single color for 7 days" }],
-  jury: [{ question: "Why this medium?", answer: "It best aligns with the conceptual pressure of the project." }],
-  statement: { title: "Fallback Statement", body: "This body of work is a focused exploration of form and context." }
+  emergency: {
+    priority: "medium",
+    actions: [
+      "حدّد التسليم الأقرب خلال 24 ساعة.",
+      "نفّذ نسخة بسيطة بخامة متاحة الآن.",
+      "جهّز عرضًا مختصرًا من 3 نقاط للجنة."
+    ]
+  },
+  ideas: [
+    { seed: "واجهة محل في الحي", variation: "حوّل عناصرها إلى ملصق أبيض/أسود سريع التنفيذ." },
+    { seed: "صورة عائلية قديمة", variation: "ابنِ منها تكوين طبقات يوضح علاقة الذاكرة بالمكان." }
+  ],
+  jury: [
+    { question: "ما الفكرة في جملة؟", answer: "الفكرة ترجمة تجربة محلية إلى صياغة بصرية واضحة قبل التحكيم." },
+    { question: "ما خطة التطوير؟", answer: "تحسين الإخراج وتوسيع التجارب مع تثبيت الفكرة الأساسية." }
+  ],
+  statement: {
+    title: "بيان احتياطي سريع",
+    body: "هذا المشروع يستلهم تفاصيل من البيئة المصرية لصياغة عمل بصري عملي، واضح، وقابل للتطوير في مراحل لاحقة."
+  }
 };

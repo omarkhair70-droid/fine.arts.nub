@@ -6,6 +6,16 @@
   color-scheme: light;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: "Tajawal", Arial, sans-serif;
@@ -15,6 +25,7 @@ body {
 
 .input {
   width: 100%;
+  min-width: 0;
   border-radius: 0.75rem;
   border: 1px solid rgb(214 211 209);
   background: white;

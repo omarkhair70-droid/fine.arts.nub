@@ -1,22 +1,81 @@
-export const rescueRules = [
-  "اكتب مشكلة المشروع في سطر واحد واضح.",
-  "حدد المطلوب للتسليم القادم فقط، وليس الفصل كله.",
-  "اختصر الفكرة إلى عنصر بصري واحد يمكن تنفيذه اليوم.",
-  "ابدأ بسكتش سريع خلال 15 دقيقة قبل أي بحث إضافي.",
-  "استخدم خامات متاحة في البيت قبل شراء أي خامة جديدة.",
-  "اختر مرجعًا واحدًا فقط وطبّق منه مبدأًا واحدًا.",
-  "قسّم التنفيذ إلى ثلاث مهام صغيرة: إعداد، تجربة، إخراج.",
-  "حدد وقتًا نهائيًا للتجربة الأولى حتى لو كانت ناقصة.",
-  "اعمل نسخة بسيطة ثم نسخة محسّنة بدل انتظار النسخة المثالية.",
-  "التقط صورًا لكل مرحلة لتوثيق التطور أمام لجنة التحكيم.",
-  "إذا تعطل جزء، انتقل فورًا لبديل خامة أو بديل مقاس.",
-  "استخدم لوحة ألوان محدودة لتقليل التشتت وتسريع القرار.",
-  "اختبر التكوين على مقاس صغير قبل التنفيذ النهائي.",
-  "اطلب رأيًا سريعًا من زميل واحد بسؤال محدد جدًا.",
-  "دوّن ثلاث ملاحظات تصحيح بعد كل تجربة عملية.",
-  "راجع توافق العمل مع متطلبات المادة بندًا بندًا.",
-  "جهّز جملة تعريف قصيرة تشرح الفكرة في أقل من 20 ثانية.",
-  "اترك ساعتين قبل التسليم للمراجعة والتنظيف والإخراج.",
-  "جهّز نسخة احتياطية قابلة للطباعة أو العرض فورًا.",
-  "أنهِ اليوم بخطوة قابلة للقياس لليوم التالي."
+import type {
+  BudgetLevel,
+  Department,
+  ExperienceLevel,
+  Mood,
+  ProjectFormat
+} from "@/types/taxonomy";
+
+export interface RescueRule {
+  id: string;
+  text: string;
+  department: Department;
+  budgetLevel: BudgetLevel;
+  experienceLevel: ExperienceLevel;
+  mood: Mood;
+  projectFormat: ProjectFormat;
+  intent: "scope" | "execution" | "materials" | "presentation" | "feedback";
+}
+
+export const rescueRules: RescueRule[] = [
+  {
+    id: "scope-problem-line",
+    text: "اكتب مشكلة المشروع في سطر واحد واضح.",
+    department: "general",
+    budgetLevel: "very-low",
+    experienceLevel: "beginner",
+    mood: "chaos",
+    projectFormat: "presentation",
+    intent: "scope"
+  },
+  {
+    id: "execute-fast-sketch",
+    text: "ابدأ بسكتش سريع خلال 15 دقيقة قبل أي بحث إضافي.",
+    department: "drawing",
+    budgetLevel: "very-low",
+    experienceLevel: "beginner",
+    mood: "tension",
+    projectFormat: "poster",
+    intent: "execution"
+  },
+  {
+    id: "material-home-first",
+    text: "استخدم خامات متاحة في البيت قبل شراء أي خامة جديدة.",
+    department: "general",
+    budgetLevel: "very-low",
+    experienceLevel: "intermediate",
+    mood: "hope",
+    projectFormat: "model",
+    intent: "materials"
+  },
+  {
+    id: "document-progress",
+    text: "التقط صورًا لكل مرحلة لتوثيق التطور أمام لجنة التحكيم.",
+    department: "photography",
+    budgetLevel: "low",
+    experienceLevel: "beginner",
+    mood: "identity",
+    projectFormat: "presentation",
+    intent: "presentation"
+  },
+  {
+    id: "single-peer-feedback",
+    text: "اطلب رأيًا سريعًا من زميل واحد بسؤال محدد جدًا.",
+    department: "general",
+    budgetLevel: "very-low",
+    experienceLevel: "intermediate",
+    mood: "isolation",
+    projectFormat: "presentation",
+    intent: "feedback"
+  },
+  {
+    id: "backup-version",
+    text: "جهّز نسخة احتياطية قابلة للطباعة أو العرض فورًا.",
+    department: "graphic",
+    budgetLevel: "low",
+    experienceLevel: "advanced",
+    mood: "tension",
+    projectFormat: "presentation",
+    intent: "presentation"
+  }
 ];

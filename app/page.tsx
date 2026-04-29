@@ -3,8 +3,8 @@ import Link from "next/link";
 const cards = [
   { title: "عندي تسليم بكرة", href: "/tools/emergency", subtitle: "خطة إنقاذ عملية وسريعة تمشيك خطوة بخطوة." },
   { title: "عايز فكرة مشروع", href: "/tools/ideas", subtitle: "٣ أفكار قابلة للتنفيذ والدفاع قدام اللجنة." },
-  { title: "هشرح شغلي للجنة", href: "/tools/jury", subtitle: "قريبًا" },
-  { title: "اكتبلي شرح العمل", href: "/tools/statement", subtitle: "قريبًا" }
+  { title: "هشرح شغلي للجنة", href: "/tools/jury", subtitle: "أسئلة متوقعة وإجابات مقترحة للدفاع بثقة." },
+  { title: "اكتبلي شرح العمل", href: "/tools/statement", subtitle: "Artist Statement جاهز بصياغات قصيرة ورسمية." }
 ];
 
 export default function HomePage() {
@@ -13,8 +13,8 @@ export default function HomePage() {
       <div className="mx-auto max-w-4xl space-y-8">
         <header className="space-y-3">
           <p className="inline-block rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700">Studio Rescue</p>
-          <h1 className="text-4xl font-black leading-tight">عندك تسليم؟<br />خد نفس. افتح عدة النجاة.</h1>
-          <p className="max-w-2xl text-sm leading-7 text-stone-700">أدوات سريعة تساعدك تطلع فكرة، ترتب خاماتك، تجهز شرح مشروعك، وتقف قدام اللجنة بثقة.</p>
+          <h1 className="break-words text-3xl font-black leading-tight sm:text-4xl">عندك تسليم؟<br />خد نفس. افتح عدة النجاة.</h1>
+          <p className="max-w-2xl break-words text-sm leading-relaxed text-stone-700 sm:leading-7">أدوات سريعة تساعدك تطلع فكرة، ترتب خاماتك، تجهز شرح مشروعك، وتقف قدام اللجنة بثقة.</p>
         </header>
 
         <section className="grid gap-3 sm:grid-cols-2">

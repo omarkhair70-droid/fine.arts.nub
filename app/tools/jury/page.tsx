@@ -3,10 +3,12 @@
 import { useMemo, useState } from "react";
 
 import CopyButton from "@/components/CopyButton";
+import NextStepActions from "@/components/NextStepActions";
 import ResultCard from "@/components/ResultCard";
 import ToolPageShell from "@/components/ToolPageShell";
 import ToolSection from "@/components/ToolSection";
 import { generateJuryPrep } from "@/lib/generators/generateJuryPrep";
+import { getSuitabilityLabel } from "@/lib/suitability";
 import { departmentLabels, departments, experienceLevelLabels, experienceLevels, moodLabels, moods, projectFormatLabels, projectFormats } from "@/lib/ui-labels";
 import type { JuryInput } from "@/types/jury";
 import type { Department, ExperienceLevel, Mood, ProjectFormat } from "@/types/taxonomy";
@@ -41,7 +43,8 @@ export default function JuryPage() {
         </form>
       </ToolSection>
 
-      <ToolSection title="الملخص"><p>{output.summary}</p></ToolSection>
+      <ToolSection title="الملخص"><p className="leading-7">{output.summary}</p></ToolSection>
+      <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-7 text-emerald-800">الإجابات دي تساعدك ترتب كلامك، مش تحفظه حرفيًا.</p>
 
       <ToolSection title="افتتاحية تقولها في أول الشرح">
         <div className="mb-2"><CopyButton text={output.openingLine} /></div>
@@ -62,7 +65,7 @@ export default function JuryPage() {
               <ul className="list-disc ps-5 text-sm">{q.weaknessWarnings.map((item) => <li key={item}>{item}</li>)}</ul>
               <p className="mt-2 text-sm font-bold text-rose-700">بلاش تقول</p>
               <ul className="list-disc ps-5 text-sm">{q.avoidSaying.map((item) => <li key={item}>{item}</li>)}</ul>
-              <p className="mt-2 text-xs font-bold text-stone-600">fitScore: {q.fitScore}%</p>
+              <p className="mt-2 text-xs font-bold text-stone-600">درجة الملاءمة: {getSuitabilityLabel(q.fitScore)}</p>
             </ResultCard>
           ))}
         </div>
@@ -71,6 +74,7 @@ export default function JuryPage() {
       <ToolSection title="نقاط قوة ركز عليها"><ul className="list-disc space-y-1 ps-5">{output.strongestPoints.map((item) => <li key={item}>{item}</li>)}</ul></ToolSection>
       <ToolSection title="نقاط خطر خليك جاهز لها"><ul className="list-disc space-y-1 ps-5">{output.riskyPoints.map((item) => <li key={item}>{item}</li>)}</ul></ToolSection>
       <ToolSection title="جملة دفاع نهائية"><div className="mb-2"><CopyButton text={output.finalDefenseLine} /></div><p>{output.finalDefenseLine}</p></ToolSection>
+      <NextStepActions actions={[{ label: "اكتبلي Artist Statement", href: "/tools/statement" }, { label: "رجعني لخطة التسليم", href: "/tools/emergency" }, { label: "طلعلي فكرة تانية", href: "/tools/ideas" }]} />
     </ToolPageShell>
   );
 }

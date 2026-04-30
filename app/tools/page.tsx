@@ -1,25 +1,31 @@
 import Link from "next/link";
 
+import SiteHeader from "@/components/SiteHeader";
+
 const tools = [
-  { title: "Emergency Mode", href: "/tools/emergency", desc: "يطلعلك خطة إنقاذ واضحة: تبدأ بإيه، خاماتك إيه، وتقدم إزاي بثقة." },
-  { title: "Idea Generator", href: "/tools/ideas", desc: "يرشحلك 3 أفكار مناسبة لقسمك ومزاجك ومستواك وتنفع تتنفذ بسرعة." },
-  { title: "Jury Mode", href: "/tools/jury", desc: "تدريب سريع على شرح الفكرة والرد على أسئلة اللجنة. قريبًا." },
-  { title: "Artist Statement", href: "/tools/statement", desc: "يساعدك تطلع نص شرح واضح ومقنع للعمل. قريبًا." }
+  { title: "أنا مزنوق في التسليم", href: "/tools/emergency", desc: "خطة تنفيذ، خامات، بدائل أوفر، وجملة شرح." },
+  { title: "أنا محتاج فكرة", href: "/tools/ideas", desc: "3 أفكار قابلة للتنفيذ والدفاع قدام اللجنة." },
+  { title: "أنا هقف قدام لجنة", href: "/tools/jury", desc: "أسئلة متوقعة، إجابات محترمة، ونقاط قوة." },
+  { title: "أنا محتاج أشرح العمل", href: "/tools/statement", desc: "شرح قصير، رسمي، وبالكلام العادي." }
 ];
 
 export default function ToolsPage() {
   return (
-    <main dir="rtl" className="min-h-screen bg-stone-50 px-4 py-8 text-stone-900">
-      <div className="mx-auto max-w-4xl space-y-6">
-        <h1 className="text-3xl font-black">الأدوات</h1>
-        <div className="grid gap-3 sm:grid-cols-2">
+    <main dir="rtl" className="min-h-screen bg-stone-50 text-stone-900">
+      <SiteHeader />
+      <div className="mx-auto max-w-4xl space-y-6 px-4 py-8">
+        <header className="space-y-2">
+          <h1 className="text-3xl font-black">اختار وضع الإنقاذ</h1>
+          <p className="text-sm leading-7 text-stone-700">مش لازم تبدأ من الصفر. اختار المشكلة اللي واقف عندها دلوقتي.</p>
+        </header>
+        <section className="grid gap-3 sm:grid-cols-2">
           {tools.map((tool) => (
-            <Link key={tool.title} href={tool.href} className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
-              <h2 className="text-lg font-bold">{tool.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-stone-600">{tool.desc}</p>
+            <Link key={tool.title} href={tool.href} className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:border-rose-300">
+              <h2 className="text-lg font-extrabold leading-7">{tool.title}</h2>
+              <p className="mt-2 text-sm leading-7 text-stone-600">{tool.desc}</p>
             </Link>
           ))}
-        </div>
+        </section>
       </div>
     </main>
   );

@@ -3,10 +3,12 @@
 import { useMemo, useState } from "react";
 
 import CopyButton from "@/components/CopyButton";
+import NextStepActions from "@/components/NextStepActions";
 import ResultCard from "@/components/ResultCard";
 import ToolPageShell from "@/components/ToolPageShell";
 import ToolSection from "@/components/ToolSection";
 import { generateIdeas } from "@/lib/generators/generateIdeas";
+import { getSuitabilityLabel } from "@/lib/suitability";
 import { budgetLevelLabels, budgetLevels, departmentLabels, departments, experienceLevelLabels, experienceLevels, moodLabels, moods, projectFormatLabels, projectFormats } from "@/lib/ui-labels";
 import type { IdeaInput } from "@/types/ideas";
 import type { BudgetLevel, Department, ExperienceLevel, Mood, ProjectFormat } from "@/types/taxonomy";
@@ -26,10 +28,12 @@ export default function IdeasPage() {
           <Field label="مستواك"><select value={form.experienceLevel} onChange={(e) => setForm((p) => ({ ...p, experienceLevel: e.target.value as ExperienceLevel }))} className="input">{experienceLevels.map((o) => <option key={o} value={o}>{experienceLevelLabels[o]}</option>)}</select></Field>
         </form>
       </ToolSection>
-      <ToolSection title="الملخص"><p>{output.summary}</p></ToolSection>
+      <ToolSection title="الملخص"><p className="leading-7">{output.summary}</p></ToolSection>
+      <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-7 text-emerald-800">اختار فكرة واحدة بس وطورها. متحاولش تنفذ كل حاجة مرة واحدة.</p>
       <ToolSection title="الأفكار المقترحة">
-        <div className="space-y-3">{output.ideas.map((idea) => <ResultCard key={idea.id}><p className="text-lg font-extrabold">{idea.title}</p><p className="mt-2"><span className="font-bold">الكونسبت: </span>{idea.concept}</p><p><span className="font-bold">الخامات: </span>{idea.materials.join("، ")}</p><div><p className="font-bold">طريقة التنفيذ</p><ul className="list-disc ps-5">{idea.executionMethod.map((item) => <li key={item}>{item}</li>)}</ul></div><p><span className="font-bold">ليه الفكرة قوية؟ </span>{idea.whyStrong}</p><p><span className="font-bold">جملة شرح قصيرة: </span>{idea.shortExplanation}</p><CopyButton text={idea.shortExplanation} /><p className="mt-2"><span className="font-bold">جملة دفاع قدام اللجنة: </span>{idea.juryDefenseLine}</p><CopyButton text={idea.juryDefenseLine} /><p className="mt-2 text-sm font-bold text-rose-700">نسبة الملاءمة: {idea.fitScore}%</p></ResultCard>)}</div>
+        <div className="space-y-3">{output.ideas.map((idea) => <ResultCard key={idea.id}><p className="text-lg font-extrabold">{idea.title}</p><p className="mt-2"><span className="font-bold">الكونسبت: </span>{idea.concept}</p><p><span className="font-bold">الخامات: </span>{idea.materials.join("، ")}</p><div><p className="font-bold">طريقة التنفيذ</p><ul className="list-disc ps-5">{idea.executionMethod.map((item) => <li key={item}>{item}</li>)}</ul></div><p><span className="font-bold">ليه الفكرة قوية؟ </span>{idea.whyStrong}</p><p><span className="font-bold">جملة شرح قصيرة: </span>{idea.shortExplanation}</p><CopyButton text={idea.shortExplanation} /><p className="mt-2"><span className="font-bold">جملة دفاع قدام اللجنة: </span>{idea.juryDefenseLine}</p><CopyButton text={idea.juryDefenseLine} /><p className="mt-2 text-sm font-bold text-rose-700">درجة الملاءمة: {getSuitabilityLabel(idea.fitScore)}</p></ResultCard>)}</div>
       </ToolSection>
+      <NextStepActions actions={[{ label: "جهزني للجنة", href: "/tools/jury" }, { label: "اكتبلي شرح العمل", href: "/tools/statement" }, { label: "اعمل خطة إنقاذ", href: "/tools/emergency" }]} />
     </ToolPageShell>
   );
 }

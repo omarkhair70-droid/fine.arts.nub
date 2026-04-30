@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import CopyButton from "@/components/CopyButton";
+import NextStepActions from "@/components/NextStepActions";
 import ResultCard from "@/components/ResultCard";
 import ToolPageShell from "@/components/ToolPageShell";
 import ToolSection from "@/components/ToolSection";
@@ -28,7 +29,8 @@ export default function EmergencyPage() {
         </form>
       </ToolSection>
 
-      <ToolSection title="الخلاصة"><p>{plan.summary}</p></ToolSection>
+      <ToolSection title="الخلاصة"><p className="leading-7">{plan.summary}</p></ToolSection>
+      <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-7 text-emerald-800">متقلقش. الهدف هنا مش الكمال — الهدف إنك تطلع نسخة واضحة تتسلم.</p>
       <ToolSection title="ابدأ دلوقتي"><ul className="list-disc space-y-1 ps-5">{plan.doNow.map((item) => <li key={item}>{item}</li>)}</ul></ToolSection>
       <ToolSection title="خطة اليوم">{plan.dayPlan.map((b) => <ResultCard key={b.title}><h3 className="font-bold">{b.title}</h3><ul className="mt-2 list-disc space-y-1 ps-5">{b.tasks.map((t) => <li key={t}>{t}</li>)}</ul></ResultCard>)}</ToolSection>
       <ToolSection title="الخامات"><ul className="space-y-2">{plan.materials.map((m) => <li key={m.name}><p className="font-bold">{m.name}</p><p className="text-sm">{m.reason}</p>{m.alternatives?.length ? <p className="text-sm text-stone-700">بدائل: {m.alternatives.join("، ")}</p> : null}</li>)}</ul></ToolSection>
@@ -37,6 +39,7 @@ export default function EmergencyPage() {
       <ToolSection title="قولها كده"><div className="mb-2"><CopyButton text={plan.explainItLikeThis} /></div><p>{plan.explainItLikeThis}</p></ToolSection>
       <ToolSection title="جملة دفاع قدام اللجنة"><div className="mb-2"><CopyButton text={plan.juryDefenseLine} /></div><p>{plan.juryDefenseLine}</p></ToolSection>
       <ToolSection title="أخطاء بلاش تقع فيها">{plan.commonMistakes.map((m) => <ResultCard key={m.mistake}><p className="font-bold">{m.mistake}</p><p className="text-sm">ليه بتضر: {m.whyItHurts}</p><p className="text-sm">الحل السريع: {m.fixFast}</p></ResultCard>)}</ToolSection>
+      <NextStepActions actions={[{ label: "عايز فكرة مشروع؟", href: "/tools/ideas" }, { label: "جهزني للجنة", href: "/tools/jury" }, { label: "اكتبلي شرح العمل", href: "/tools/statement" }]} />
     </ToolPageShell>
   );
 }

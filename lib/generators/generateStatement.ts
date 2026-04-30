@@ -1,4 +1,3 @@
-import { fallbackOutputs } from "@/lib/data/fallbackOutputs";
 import { statementTemplates } from "@/lib/data/statementTemplates";
 import { moodLabels } from "@/lib/ui-labels";
 import type { StatementInput, StatementOutput } from "@/types/statement";
@@ -15,32 +14,45 @@ function tokenize(value: string): string[] {
     .filter((t) => t.length > 1);
 }
 
+function cleanSentence(value: string): string {
+  return value.replace(/\s+/g, " ").replace(/\s([،.])/g, "$1").trim();
+}
+
 export function generateStatement(input?: StatementInput): StatementOutput {
   if (!input) {
     return {
       suggestedTitle: "ملامح فكرة قيد التشكّل",
-      shortVersion: "مشروعي بيحاول يترجم فكرة شخصية لصياغة بصرية واضحة، مع تركيز على وضوح الرسالة وسهولة عرضها.",
-      formalVersion: "يقدم هذا العمل محاولة لصياغة فكرة بصرية قابلة للقراءة، من خلال معالجة متوازنة بين المحتوى والشكل بهدف تقديم رسالة واضحة قبل التحكيم.",
-      simpleSpokenVersion: "الفكرة ببساطة إني أحول إحساس أو موقف لصورة مفهومة وسهلة الشرح قدام اللجنة.",
-      presentationLine: "أنا مركز على الوضوح: فكرة محددة، تنفيذ متماسك، ورسالة مباشرة.",
-      keywords: ["وضوح", "فكرة", "تنفيذ", "رسالة"]
+      shortVersion: "بيان فني أولي يوضح فكرة المشروع بصياغة بسيطة تساعدك في التحكيم.",
+      formalVersion: "هذا نص تمهيدي يساعد على تحويل الفكرة الأولية إلى بيان فني واضح يجمع بين المعنى والتنفيذ دون تعقيد لغوي.",
+      simpleSpokenVersion: "لسه بصيغ الفكرة، لكن هدفي أقدمها بشكل واضح وسهل يتقال قدام اللجنة.",
+      presentationLine: "الفكرة واضحة، والتنفيذ في اتجاه متماسك.",
+      keywords: ["فكرة", "وضوح", "صياغة", "تحكيم"]
     };
   }
 
-  const textPool = tokenize(`${input.topic} ${input.message} ${input.material} ${input.colors}`);
+  const safeTopic = input.topic?.trim() || "تجربة شخصية";
+  const safeMaterial = input.material?.trim() || "خامة مناسبة";
+  const safeColors = input.colors?.trim() || "درجات لونية متوازنة";
+  const safeMessage = input.message?.trim() || "رسالة بصرية واضحة";
+
+  const textPool = tokenize(`${safeTopic} ${safeMessage} ${safeMaterial} ${safeColors}`);
 
   let best = statementTemplates[0];
   let bestScore = -1;
 
   for (const template of statementTemplates) {
     let score = 0;
-    if (template.departments?.includes(input.department)) score += 4;
-    if (template.projectFormats?.includes(input.projectFormat)) score += 4;
-    if (template.moods?.includes(input.mood)) score += 5;
+    if (template.moods?.includes(input.mood)) score += 7;
+    if (template.projectFormats?.includes(input.projectFormat)) score += 5;
+    if (template.departments?.includes(input.department)) score += 5;
 
     for (const keyword of template.keywords) {
       const key = keyword.toLowerCase();
       if (textPool.some((token) => key.includes(token) || token.includes(key))) score += 2;
+    }
+    for (const trigger of template.triggerKeywords ?? []) {
+      const t = trigger.toLowerCase();
+      if (textPool.some((token) => t.includes(token) || token.includes(t))) score += 3;
     }
 
     if (score > bestScore) {
@@ -50,19 +62,34 @@ export function generateStatement(input?: StatementInput): StatementOutput {
   }
 
   const vars = {
-    topic: input.topic || "موضوع شخصي",
-    material: input.material || "خامة مناسبة",
-    colors: input.colors || "درجات لونية هادئة",
-    message: input.message || "طرح بصري واضح",
+    topic: safeTopic,
+    material: safeMaterial,
+    colors: safeColors,
+    message: safeMessage,
     mood: moodLabels[input.mood]
   };
 
+  const suggestedTitle = cleanSentence(render(best.titlePattern, vars)).slice(0, 44);
+  const shortVersion = cleanSentence(render(best.shortTemplate, vars));
+  let formalVersion = cleanSentence(render(best.formalTemplate, vars));
+  let simpleSpokenVersion = cleanSentence(render(best.spokenTemplate, vars));
+
+  if (formalVersion === shortVersion) {
+    formalVersion = `${formalVersion} كما يوضح العمل العلاقة بين الشكل والمضمون بصورة مباشرة.`;
+  }
+  if (simpleSpokenVersion === shortVersion || simpleSpokenVersion === formalVersion) {
+    simpleSpokenVersion = `ببساطة، أنا بقدم ${safeTopic} بطريقة قريبة للمتلقي باستخدام ${safeMaterial} و${safeColors}.`;
+  }
+
+  const extractedArabic = textPool.filter((w) => /[\u0600-\u06FF]/.test(w) && w.length >= 3).slice(0, 5);
+  const keywords = Array.from(new Set([...best.keywords, ...extractedArabic, moodLabels[input.mood]])).slice(0, 10);
+
   return {
-    suggestedTitle: render(best.titlePattern, vars),
-    shortVersion: render(best.shortTemplate, vars),
-    formalVersion: render(best.formalTemplate, vars),
-    simpleSpokenVersion: render(best.spokenTemplate, vars),
-    presentationLine: render(best.presentationLineTemplate, vars),
-    keywords: Array.from(new Set([...best.keywords, vars.mood, input.projectFormat, input.department])).slice(0, 8)
+    suggestedTitle: suggestedTitle || "بيان فني",
+    shortVersion,
+    formalVersion,
+    simpleSpokenVersion,
+    presentationLine: cleanSentence(render(best.presentationLineTemplate, vars)),
+    keywords
   };
 }

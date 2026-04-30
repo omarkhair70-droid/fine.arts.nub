@@ -3,6 +3,7 @@ import Link from "next/link";
 const links = [
   { label: "الرئيسية", href: "/" },
   { label: "الأدوات", href: "/tools" },
+  { label: "اختارلي الطريق", href: "/start" },
   { label: "تسليم بكرة", href: "/tools/emergency" },
   { label: "فكرة مشروع", href: "/tools/ideas" },
   { label: "اللجنة", href: "/tools/jury" },

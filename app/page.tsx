@@ -21,6 +21,20 @@ export default function HomePage() {
           <p className="text-sm font-bold text-stone-800">اختار حسب مشكلتك دلوقتي:</p>
         </header>
 
+
+
+        <section className="rounded-2xl border border-rose-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-bold text-rose-700">تايه ومش عارف تبدأ؟</p>
+          <h2 className="mt-1 text-xl font-black">اختارلي الطريق</h2>
+          <p className="mt-2 text-sm leading-7 text-stone-700">جاوب على سؤال واحد وخد ترشيح مباشر لأول أداة تناسب حالتك.</p>
+          <Link
+            href="/start"
+            className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-rose-700 sm:w-auto"
+          >
+            أنا تايه… اختارلي أبدأ منين
+          </Link>
+        </section>
+
         <section className="grid gap-3 sm:grid-cols-2">
           {cards.map((card) => (
             <Link key={card.title} href={card.href} className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:border-rose-400">

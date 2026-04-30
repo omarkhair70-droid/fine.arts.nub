@@ -31,7 +31,9 @@ export default function JuryPage() {
       title="هشرح شغلي للجنة"
       subtitle="حضّر إجاباتك قبل ما تقف قدام الدكتور. اكتب فكرة مشروعك، وStudio Rescue يطلعلك أسئلة متوقعة، إجابات محترمة، ونقاط قوة تدافع بيها عن شغلك."
     >
+      <p className="rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm leading-7 text-stone-700">مثال: اكتب فكرتك ببساطة زي “العزلة وسط الزحمة”. مش لازم صياغة أكاديمية.</p>
       <ToolSection title="بيانات مشروعك">
+        <p className="mb-2 text-xs font-semibold text-stone-600">اكتب ببساطة. مش لازم تكون الجملة مثالية.</p>
         <form className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="القسم"><select value={form.department} onChange={(e) => setForm((p) => ({ ...p, department: e.target.value as Department }))} className="input">{departments.map((o) => <option key={o} value={o}>{departmentLabels[o]}</option>)}</select></Field>
           <Field label="نوع التسليم"><select value={form.projectFormat} onChange={(e) => setForm((p) => ({ ...p, projectFormat: e.target.value as ProjectFormat }))} className="input">{projectFormats.map((o) => <option key={o} value={o}>{projectFormatLabels[o]}</option>)}</select></Field>
@@ -74,7 +76,7 @@ export default function JuryPage() {
       <ToolSection title="نقاط قوة ركز عليها"><ul className="list-disc space-y-1 ps-5">{output.strongestPoints.map((item) => <li key={item}>{item}</li>)}</ul></ToolSection>
       <ToolSection title="نقاط خطر خليك جاهز لها"><ul className="list-disc space-y-1 ps-5">{output.riskyPoints.map((item) => <li key={item}>{item}</li>)}</ul></ToolSection>
       <ToolSection title="جملة دفاع نهائية"><div className="mb-2"><CopyButton text={output.finalDefenseLine} /></div><p>{output.finalDefenseLine}</p></ToolSection>
-      <NextStepActions actions={[{ label: "اكتبلي Artist Statement", href: "/tools/statement" }, { label: "رجعني لخطة التسليم", href: "/tools/emergency" }, { label: "طلعلي فكرة تانية", href: "/tools/ideas" }]} />
+      <NextStepActions actions={[{ label: "اكتبلي شرح العمل", href: "/tools/statement" }, { label: "رجعني لخطة التسليم", href: "/tools/emergency" }, { label: "طلعلي فكرة تانية", href: "/tools/ideas" }]} />
     </ToolPageShell>
   );
 }

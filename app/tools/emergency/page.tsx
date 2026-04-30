@@ -18,7 +18,9 @@ export default function EmergencyPage() {
 
   return (
     <ToolPageShell title="عندي تسليم بكرة" subtitle="جاوب على كام سؤال، وهنطلعلك خطة إنقاذ واضحة: تبدأ بإيه، تستخدم خامات إيه، وتشرح شغلك إزاي قدام اللجنة.">
+      <p className="rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm leading-7 text-stone-700">مثال: جرافيك + بوستر + فاضل يوم + ميزانية قليلة = خطة سريعة تبدأ بيها فورًا.</p>
       <ToolSection title="البيانات الأساسية">
+        <p className="mb-2 text-xs font-semibold text-stone-600">اكتب ببساطة. مش لازم تكون الجملة مثالية.</p>
         <form className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="القسم"><select value={form.department} onChange={(e) => setForm((prev) => ({ ...prev, department: e.target.value as Department }))} className="input">{departments.map((o) => <option key={o} value={o}>{departmentLabels[o]}</option>)}</select></Field>
           <Field label="نوع التسليم"><select value={form.projectFormat} onChange={(e) => setForm((prev) => ({ ...prev, projectFormat: e.target.value as ProjectFormat }))} className="input">{projectFormats.map((o) => <option key={o} value={o}>{projectFormatLabels[o]}</option>)}</select></Field>

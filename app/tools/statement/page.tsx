@@ -27,9 +27,11 @@ export default function StatementPage() {
   const output = useMemo(() => generateStatement(form), [form]);
 
   return (
-    <ToolPageShell title="اكتبلي شرح العمل" subtitle="حوّل فكرتك لكلام واضح ينفع يتقال في البريزنتيشن أو يتكتب كـ Artist Statement من غير ما يبان مصطنع.">
+    <ToolPageShell title="اكتبلي شرح العمل" subtitle="حوّل فكرتك لكلام واضح ينفع يتقال في البريزنتيشن أو يتكتب كـ شرح العمل / Artist Statement من غير ما يبان مصطنع.">
+      <p className="rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm leading-7 text-stone-700">مثال: اكتب موضوع العمل والخامة والرسالة بكلامك العادي، والموقع يحولهم لشرح مرتب.</p>
       <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-7 text-emerald-800">استخدم النص كبداية وعدّله بصوتك عشان يفضل صادق.</p>
       <ToolSection title="بيانات مشروعك">
+        <p className="mb-2 text-xs font-semibold text-stone-600">اكتب ببساطة. مش لازم تكون الجملة مثالية.</p>
         <form className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="القسم"><select value={form.department} onChange={(e) => setForm((p) => ({ ...p, department: e.target.value as Department }))} className="input">{departments.map((o) => <option key={o} value={o}>{departmentLabels[o]}</option>)}</select></Field>
           <Field label="نوع التسليم"><select value={form.projectFormat} onChange={(e) => setForm((p) => ({ ...p, projectFormat: e.target.value as ProjectFormat }))} className="input">{projectFormats.map((o) => <option key={o} value={o}>{projectFormatLabels[o]}</option>)}</select></Field>

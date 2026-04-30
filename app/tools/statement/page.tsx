@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import CopyButton from "@/components/CopyButton";
+import NextStepActions from "@/components/NextStepActions";
 import ResultCard from "@/components/ResultCard";
 import ToolPageShell from "@/components/ToolPageShell";
 import ToolSection from "@/components/ToolSection";
@@ -27,6 +28,7 @@ export default function StatementPage() {
 
   return (
     <ToolPageShell title="اكتبلي شرح العمل" subtitle="حوّل فكرتك لكلام واضح ينفع يتقال في البريزنتيشن أو يتكتب كـ Artist Statement من غير ما يبان مصطنع.">
+      <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-7 text-emerald-800">استخدم النص كبداية وعدّله بصوتك عشان يفضل صادق.</p>
       <ToolSection title="بيانات مشروعك">
         <form className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="القسم"><select value={form.department} onChange={(e) => setForm((p) => ({ ...p, department: e.target.value as Department }))} className="input">{departments.map((o) => <option key={o} value={o}>{departmentLabels[o]}</option>)}</select></Field>
@@ -46,6 +48,7 @@ export default function StatementPage() {
       <ToolSection title="نسخة بالكلام العادي"><div className="mb-2"><CopyButton text={output.simpleSpokenVersion} /></div><ResultCard>{output.simpleSpokenVersion}</ResultCard></ToolSection>
       <ToolSection title="جملة للبريزنتيشن"><div className="mb-2"><CopyButton text={output.presentationLine} /></div><ResultCard>{output.presentationLine}</ResultCard></ToolSection>
       <ToolSection title="كلمات مفتاحية"><div className="flex flex-wrap gap-2">{output.keywords.map((k) => <span key={k} className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1 text-sm">{k}</span>)}</div></ToolSection>
+      <NextStepActions actions={[{ label: "جهزني للجنة", href: "/tools/jury" }, { label: "طلعلي فكرة تانية", href: "/tools/ideas" }, { label: "اعمل خطة إنقاذ", href: "/tools/emergency" }]} />
     </ToolPageShell>
   );
 }

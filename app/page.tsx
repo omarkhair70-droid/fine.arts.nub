@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import SiteHeader from "@/components/SiteHeader";
+
 const cards = [
   { title: "عندي تسليم بكرة", href: "/tools/emergency", subtitle: "خطة إنقاذ عملية وسريعة تمشيك خطوة بخطوة." },
   { title: "عايز فكرة مشروع", href: "/tools/ideas", subtitle: "٣ أفكار قابلة للتنفيذ والدفاع قدام اللجنة." },
@@ -9,8 +11,9 @@ const cards = [
 
 export default function HomePage() {
   return (
-    <main dir="rtl" className="min-h-screen bg-stone-50 px-4 py-10 text-stone-900">
-      <div className="mx-auto max-w-4xl space-y-8">
+    <main dir="rtl" className="min-h-screen bg-stone-50 text-stone-900">
+      <SiteHeader />
+      <div className="mx-auto max-w-4xl space-y-8 px-4 py-10">
         <header className="space-y-3">
           <p className="inline-block rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700">Studio Rescue</p>
           <h1 className="break-words text-3xl font-black leading-tight sm:text-4xl">عندك تسليم؟<br />خد نفس. افتح عدة النجاة.</h1>
